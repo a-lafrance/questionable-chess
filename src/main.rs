@@ -1,3 +1,4 @@
+mod board;
 mod err;
 mod game;
 mod mv;
@@ -9,9 +10,10 @@ use crate::{err::MoveError, game::Game, mv::Move};
 fn main() -> io::Result<()> {
     println!("Welcome to Chess!");
     println!("Specify moves using standard notation (one character piece + start/end squares)\n");
+    // TODO: message about which color is which player
 
     let mut move_buf = [0; 5];
-    let mut game = Game::new();
+    let mut game = Game::default();
 
     // it's unfortunate that all these infinite loops seem
     // like the most elegant way to do this

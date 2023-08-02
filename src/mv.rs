@@ -1,4 +1,4 @@
-use crate::{err::MoveError, game::PieceKind};
+use crate::{err::MoveError, board::PieceKind};
 
 pub struct Move {
     piece: PieceKind,
