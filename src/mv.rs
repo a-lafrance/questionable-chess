@@ -1,4 +1,4 @@
-use crate::{err::MoveError, board::PieceKind};
+use crate::{board::PieceKind, err::MoveError};
 
 pub struct Move {
     piece: PieceKind,
@@ -6,14 +6,23 @@ pub struct Move {
     end: Square,
 }
 
-impl TryFrom<[u8; 5]> for Move {
+impl Move {
+    const SIZE: usize = 5;
+}
+
+impl TryFrom<&str> for Move {
     type Error = MoveError;
 
-    fn try_from(buf: [u8; 5]) -> Result<Self, Self::Error> {
+    fn try_from(buf: &str) -> Result<Self, Self::Error> {
+        // technically this is vulnerable to extremely large allocations
+        // if the inputted line is just super long, but in practice that's
+        // both unlikely and not a huge deal
+        let buf: [char; Self::SIZE] = buf.chars().collect::<Vec<_>>().try_into().map_err(|_| MoveError::InvalidFormat)?;
+
         Ok(Move {
-            piece: PieceKind::try_from(buf[0] as char).map_err(|_| MoveError::InvalidFormat)?,
-            start: Square::try_from((buf[1] as char, buf[2] as char))?,
-            end: Square::try_from((buf[3] as char, buf[4] as char))?,
+            piece: PieceKind::try_from(buf[0]).map_err(|_| MoveError::InvalidFormat)?,
+            start: Square::try_from((buf[1], buf[2]))?,
+            end: Square::try_from((buf[3], buf[4]))?,
         })
     }
 }

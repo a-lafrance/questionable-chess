@@ -18,38 +18,14 @@ impl Board {
 
     fn royals_row(color: Color) -> Row {
         [
-            Some(Piece::new(
-                PieceKind::Rook,
-                color,
-            )),
-            Some(Piece::new(
-                PieceKind::Knight,
-                color,
-            )),
-            Some(Piece::new(
-                PieceKind::Bishop,
-                color,
-            )),
-            Some(Piece::new(
-                PieceKind::Queen,
-                color,
-            )),
-            Some(Piece::new(
-                PieceKind::King,
-                color,
-            )),
-            Some(Piece::new(
-                PieceKind::Bishop,
-                color,
-            )),
-            Some(Piece::new(
-                PieceKind::Knight,
-                color,
-            )),
-            Some(Piece::new(
-                PieceKind::Rook,
-                color,
-            )),
+            Some(Piece::new(PieceKind::Rook, color)),
+            Some(Piece::new(PieceKind::Knight, color)),
+            Some(Piece::new(PieceKind::Bishop, color)),
+            Some(Piece::new(PieceKind::Queen, color)),
+            Some(Piece::new(PieceKind::King, color)),
+            Some(Piece::new(PieceKind::Bishop, color)),
+            Some(Piece::new(PieceKind::Knight, color)),
+            Some(Piece::new(PieceKind::Rook, color)),
         ]
     }
 }
@@ -59,19 +35,15 @@ impl Default for Board {
         Self([
             // row of white royals,
             Self::royals_row(Color::White),
-
             // row of white pawns,
             Self::pawns_row(Color::White),
-
             // 4 rows of no pieces
             Self::empty_row(),
             Self::empty_row(),
             Self::empty_row(),
             Self::empty_row(),
-
             // row of black pawns,
             Self::royals_row(Color::Black),
-
             // row of black royals,
             Self::pawns_row(Color::Black),
         ])

@@ -1,4 +1,5 @@
 use std::fmt::{self, Display, Formatter};
+
 use crate::{board::Board, err::MoveError, mv::Move};
 
 #[derive(Default)]
