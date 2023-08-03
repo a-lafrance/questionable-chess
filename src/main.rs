@@ -3,9 +3,12 @@ mod err;
 mod game;
 mod mv;
 
-use std::io::{self, Read, Write};
+use std::io::{self, Write};
 
-use crate::{game::Game, mv::Move};
+use crate::{
+    game::{Game, TurnOutcome},
+    mv::Move,
+};
 
 fn main() -> io::Result<()> {
     println!("Welcome to Chess!");
@@ -21,14 +24,15 @@ fn main() -> io::Result<()> {
         println!("{}\n", game);
         print!("{} to move: ", game.current_player());
         io::stdout().flush()?;
+        move_buf.clear();
         io::stdin().read_line(&mut move_buf)?;
 
         // repeatedly try to both parse & execute the move,
         // prompting for another on any kind of error
-        loop {
+        let outcome = loop {
             let err = match Move::try_from(move_buf.trim()) {
                 Ok(mv) => match game.make_move(mv) {
-                    Ok(_) => break,
+                    Ok(outcome) => break outcome,
                     Err(e) => e,
                 },
 
@@ -40,13 +44,24 @@ fn main() -> io::Result<()> {
             io::stdout().flush()?;
             move_buf.clear();
             io::stdin().read_line(&mut move_buf)?;
+        };
+
+        match outcome {
+            TurnOutcome::Taken(piece) => println!(
+                "{} takes {}",
+                piece.color().opposite(),
+                piece,
+            ),
+
+            TurnOutcome::Win(winner) => {
+                println!("Game over, {} wins!", winner);
+                break;
+            },
+
+            _ => {},
         }
 
-        // check for winner
-        if let Some(winner) = game.winner() {
-            println!("Game over, {} wins!", winner);
-            break;
-        }
+        println!();
     }
 
     Ok(())
