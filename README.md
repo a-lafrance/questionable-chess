@@ -1,5 +1,5 @@
 # questionable-chess
-It's chess, it's questionable, it's Rust
+(Technically) a chess game
 
 One day I wondered how long it would take to write a super super minimal shell-based chess game. Just under five collective hours of dev time later, this project is the result. Sure, there's no check/checkmate/stalemate/etc detection, you can't castle -- basically any non-trivial feature of chess itself is unimplemented, *but* you can play a game of chess from start to finish. I'm leaving it up on GitHub mostly because it was pretty fun designing a completely unfamiliar, nontrivial program in Rust, and I think it ended up being at least mildly interesting.
 
