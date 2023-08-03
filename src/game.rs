@@ -71,8 +71,6 @@ impl Game {
             PieceKind::Bishop => {
                 // make sure path is diagonal
                 // make sure path not blocked
-                println!("{} {}", self.board.path_is_free(mv.start(), mv.end()),
-                    mv::path_is_diagonal(mv.start(), mv.end()));
                 self.board.path_is_free(mv.start(), mv.end())
                     && mv::path_is_diagonal(mv.start(), mv.end())
             },
