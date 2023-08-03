@@ -73,7 +73,7 @@ pub fn path_is_horizontal(start: Square, end: Square) -> bool {
 }
 
 pub fn horizontal_displacement(start: Square, end: Square) -> usize {
-    (start.col as isize - end.col as isize).abs() as usize
+    (start.col as isize - end.col as isize).unsigned_abs()
 }
 
 pub fn path_is_vertical(start: Square, end: Square) -> bool {
@@ -81,7 +81,7 @@ pub fn path_is_vertical(start: Square, end: Square) -> bool {
 }
 
 pub fn vertical_displacement(start: Square, end: Square) -> usize {
-    (start.row as isize - end.row as isize).abs() as usize
+    (start.row as isize - end.row as isize).unsigned_abs()
 }
 
 pub fn path_is_diagonal(start: Square, end: Square) -> bool {

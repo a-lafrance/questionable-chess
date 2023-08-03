@@ -1,4 +1,7 @@
-use std::{cmp, fmt::{self, Display, Formatter}};
+use std::{
+    cmp,
+    fmt::{self, Display, Formatter},
+};
 
 use crate::{
     board::{Board, Piece, PieceKind},
@@ -109,9 +112,8 @@ impl Game {
                 };
 
                 let v = mv::vertical_displacement(mv.start(), mv.end());
-                let can_move_forward = mv::path_is_vertical(mv.start(), mv.end())
-                    && v == 1 || (v == 2 && mv.start().row == start_row)
-                    && !self.board.has_piece(mv.end());
+                let can_move_forward = mv::path_is_vertical(mv.start(), mv.end()) && v == 1
+                    || (v == 2 && mv.start().row == start_row) && !self.board.has_piece(mv.end());
 
                 let can_move_diagonal = mv::path_is_diagonal(mv.start(), mv.end())
                     && v == 1
@@ -159,6 +161,13 @@ impl Color {
         match self {
             Color::White => Color::Black,
             Color::Black => Color::White,
+        }
+    }
+
+    pub fn escape_code(&self) -> u8 {
+        match self {
+            Color::White => 31,
+            Color::Black => 34,
         }
     }
 }

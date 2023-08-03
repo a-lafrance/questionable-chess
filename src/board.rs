@@ -77,7 +77,9 @@ impl Board {
     }
 
     pub fn has_opposing_piece(&self, sq: Square, color: Color) -> bool {
-        self.piece(sq).map(|p| p.color() == color.opposite()).unwrap_or(false)
+        self.piece(sq)
+            .map(|p| p.color() == color.opposite())
+            .unwrap_or(false)
     }
 
     fn piece_handle(&mut self, sq: Square) -> &mut Option<Piece> {
@@ -209,12 +211,12 @@ impl Piece {
 
 impl Display for Piece {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        let color_code = match self.color() {
-            Color::White => 31,
-            Color::Black => 34,
-        };
-
-        write!(f, "\x1b[{}m{}\x1b[0m", color_code, self.kind())
+        write!(
+            f,
+            "\x1b[{}m{}\x1b[0m",
+            self.color().escape_code(),
+            self.kind()
+        )
     }
 }
 

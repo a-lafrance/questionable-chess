@@ -6,14 +6,19 @@ mod mv;
 use std::io::{self, Write};
 
 use crate::{
-    game::{Game, TurnOutcome},
+    game::{Color, Game, TurnOutcome},
     mv::Move,
 };
 
 fn main() -> io::Result<()> {
-    println!("Welcome to Chess!");
-    println!("Specify moves using standard notation (one character piece + start/end squares)\n");
-    // TODO: message about which color is which player
+    println!("Welcome to Questionable Chess!");
+    println!("Specify moves using standard notation (one character piece + start/end squares)");
+    println!(
+        "White pieces look like \x1b[{}mthis\x1b[0m, black pieces look like \x1b[{}mthis\x1b[0m",
+        Color::White.escape_code(),
+        Color::Black.escape_code()
+    );
+    println!();
 
     let mut move_buf = String::new();
     let mut game = Game::default();
@@ -47,11 +52,7 @@ fn main() -> io::Result<()> {
         };
 
         match outcome {
-            TurnOutcome::Taken(piece) => println!(
-                "{} takes {}",
-                piece.color().opposite(),
-                piece,
-            ),
+            TurnOutcome::Taken(piece) => println!("{} takes {}", piece.color().opposite(), piece,),
 
             TurnOutcome::Win(winner) => {
                 println!("Game over, {} wins!", winner);
